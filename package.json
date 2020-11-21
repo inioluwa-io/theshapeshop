@@ -21,7 +21,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-shop":"yarn workspace @vicky/shop run start",
-    "build-admin":"yarn workspace @vicky/admin run now-build && deploy-graphql"
+    "build-admin":"yarn workspace @vicky/admin run now-build",
+    "deploy-admin":"yarn workspace @vicky/admin run deploy-graphql"
   },
   "author": "Inioluwa Sogelola",
   "license": "MIT",
