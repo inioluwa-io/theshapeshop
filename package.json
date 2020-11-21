@@ -1,0 +1,33 @@
+{
+  "name": "vicky",
+  "version": "1.0.0",
+  "description": "E-commerce website powered by Gatsby, apollo",
+  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "gatsby",
+      "**/gatsby",
+      "gatsby/**",
+      "**/gatsby-*",
+      "gatsby-*/**",
+      "**/*-gatsby",
+      "*-gatsby/**"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-shop":"yarn workspace @vicky/shop run start"
+  },
+  "author": "Inioluwa Sogelola",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "lerna": "^3.22.1",
+    "prettier": "^2.0.5"
+  }
+}

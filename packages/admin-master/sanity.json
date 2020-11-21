@@ -1,0 +1,36 @@
+{
+  "root": true,
+  "api": {
+    "projectId": "k19oil4y",
+    "dataset": "production"
+  },
+  "project": {
+    "name": "My Sanity Project"
+  },
+  "plugins": [
+    "@sanity/base",
+    "@sanity/components",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool",
+    "barcode-input",
+    "@sanity/color-input",
+    "markdown",
+    "seo-tools",
+    "content-model-graph",
+    "@sanity/dashboard",
+    "dashboard-widget-netlify",
+    "dashboard-widget-notes",
+    "media"
+  ],
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas/schema.js"
+    },
+    {
+      "implements": "part:@sanity/dashboard/config",
+      "path": "./dashboardConfig.js"
+    }
+  ]
+}
