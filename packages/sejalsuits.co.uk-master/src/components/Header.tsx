@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Spring, animated } from 'react-spring';
-import { Link } from 'gatsby';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import React, { useState } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { Spring, animated } from "react-spring"
+import { Link } from "gatsby"
+import { useQuery } from "@apollo/react-hooks"
+import gql from "graphql-tag"
 
-import config from '../utils/config';
-import SocialIcons from './SocialIcons';
+import config from "../utils/config"
+import SocialIcons from "./SocialIcons"
 
 const cartQuery = gql`
   query CartItems {
@@ -15,7 +15,7 @@ const cartQuery = gql`
       id
     }
   }
-`;
+`
 
 const Container = styled.div`
   margin-top: 0.6rem;
@@ -38,7 +38,7 @@ const Container = styled.div`
   img.logo {
     max-width: 150px;
   }
-`;
+`
 
 const ContainerMobile = styled.div`
   position: relative;
@@ -54,7 +54,7 @@ const ContainerMobile = styled.div`
     font-size: 1.4rem;
     color: #4a4a4a;
   }
-`;
+`
 
 const MobileMenu = styled(animated.div)`
   && {
@@ -81,7 +81,7 @@ const MobileMenu = styled(animated.div)`
       }
     }
   }
-`;
+`
 
 const Cart = styled.div`
   margin-top: 1rem;
@@ -108,7 +108,7 @@ const Cart = styled.div`
     top: -3px;
     left: 22px;
   }
-`;
+`
 
 const CartMobile = styled.div`
   width: 8rem;
@@ -118,32 +118,32 @@ const CartMobile = styled.div`
   .count {
     left: 16px;
   }
-`;
+`
 
 const NavItems = [
-  { id: 1, name: 'New In', url: '/' },
-  { id: 2, name: 'Coupons', url: '/coupons' },
-  { id: 3, name: 'Blog', url: '/blog' },
-  { id: 4, name: 'About', url: '/page/about' },
-  { id: 5, name: 'Contact', url: '/contact' },
-];
+  { id: 1, name: "New In", url: "/" },
+  { id: 2, name: "Coupons", url: "/coupons" },
+  { id: 3, name: "Blog", url: "/blog" },
+  { id: 4, name: "About", url: "/page/about" },
+  { id: 5, name: "Contact", url: "/contact" },
+]
 
 const Header = ({ home }) => {
-  const [mobileMenuActive, setMobileMenuActive] = useState(false);
-  const { data } = useQuery(cartQuery);
-  const cartItems = data ? data.cartItems || [] : [];
+  const [mobileMenuActive, setMobileMenuActive] = useState(false)
+  const { data } = useQuery(cartQuery)
+  const cartItems = data ? data.cartItems || [] : []
 
   const cart = (
     <Cart>
       <Link to="/cart">
         <i className="fas fa-shopping-cart" />
-        <span>Cart</span>{' '}
+        <span>Cart</span>{" "}
         {cartItems.length > 0 && (
           <div className="count">{cartItems.length}</div>
         )}
       </Link>
     </Cart>
-  );
+  )
 
   const toggleMobileMenu = () => {
     // if (mobileMenuActive) {
@@ -151,8 +151,8 @@ const Header = ({ home }) => {
     // } else {
     //   $('html').addClass('disable-scroll');
     // }
-    setMobileMenuActive(!mobileMenuActive);
-  };
+    setMobileMenuActive(!mobileMenuActive)
+  }
 
   return (
     <div className="container">
@@ -172,8 +172,8 @@ const Header = ({ home }) => {
           </div>
           <div className="column has-text-right has-text-weight-semibold	">
             <p>
-              <a href={`mailto:${home.email}`}>{home.email}</a> |{' '}
-              <a href={`tel:${home.telephone}`}>{home.telephone}</a>
+              <a href={`mailto:${home?.email}`}>{home?.email}</a> |{" "}
+              <a href={`tel:${home?.telephone}`}>{home?.telephone}</a>
             </p>
             {cart}
           </div>
@@ -181,9 +181,10 @@ const Header = ({ home }) => {
         <nav
           className="navbar has-background-white-ter"
           role="navigation"
-          aria-label="main navigation">
+          aria-label="main navigation"
+        >
           <div className="navbar-menu is-uppercase has-text-weight-bold">
-            {NavItems.map(item => (
+            {NavItems.map((item) => (
               <Link to={item.url} className="navbar-item" key={item.id}>
                 {item.name}
               </Link>
@@ -215,17 +216,18 @@ const Header = ({ home }) => {
         </div>
         <Spring
           native
-          from={{ height: 0, opacity: 0, paddingTop: '-64px' }}
+          from={{ height: 0, opacity: 0, paddingTop: "-64px" }}
           to={{
             height: mobileMenuActive ? 800 : 0,
             opacity: mobileMenuActive ? 1 : 0,
             paddingTop: mobileMenuActive ? 0 : -64,
-          }}>
-          {styles => (
+          }}
+        >
+          {(styles) => (
             <MobileMenu style={styles}>
               <aside className="menu">
                 <ul className="menu-list is-uppercase has-text-weight-bold is-size-4">
-                  {NavItems.map(item => (
+                  {NavItems.map((item) => (
                     <li key={item.id} onClick={toggleMobileMenu}>
                       <Link to={item.url}>{item.name}</Link>
                     </li>
@@ -240,15 +242,15 @@ const Header = ({ home }) => {
         </Spring>
       </ContainerMobile>
     </div>
-  );
-};
+  )
+}
 
 Header.defaultProps = {
   home: {},
-};
+}
 
 Header.propTypes = {
   home: PropTypes.object,
-};
+}
 
-export default Header;
+export default Header

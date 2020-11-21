@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react"
+import styled from "styled-components"
 
-import config from '../utils/config';
+import config from "../utils/config"
 
 const ContainerImage = styled.div`
   width: 100%;
@@ -10,14 +10,14 @@ const ContainerImage = styled.div`
     width: 100%;
     height: auto;
   }
-`;
+`
 
 const StripMobile = styled.div`
   padding: 0.3rem 0;
   background-color: #100b0b;
   width: 100%;
   opacity: 0.9;
-`;
+`
 
 const HomeBanner = ({ data }) => (
   <>
@@ -26,10 +26,10 @@ const HomeBanner = ({ data }) => (
     </ContainerImage>
     <StripMobile className="is-hidden-tablet">
       <p className="is-size-6	is-uppercase has-text-white has-text-centered has-text-weight-semibold">
-        {data.homeSliderSubTitle}
+        {data?.homeHeroSubTitle}
       </p>
     </StripMobile>
   </>
-);
+)
 
-export default HomeBanner;
+export default HomeBanner

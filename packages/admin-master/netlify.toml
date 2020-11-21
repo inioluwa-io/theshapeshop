@@ -1,0 +1,10 @@
+[build]
+  publish = "packages/admin-master/dist"
+  command = "yarn run now-build"
+  functions = "functions"
+
+  [[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
+

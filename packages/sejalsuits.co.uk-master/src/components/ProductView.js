@@ -1,24 +1,24 @@
-import React from 'react';
-import { graphql, Link } from 'gatsby';
-import styled from 'styled-components';
+import React from "react"
+import { graphql, Link } from "gatsby"
+import styled from "styled-components"
 
-import config from '../utils/config';
-import Seo from './Seo';
-import Layout from './Layout';
-import ProductGallery from './ProductGallery';
-import ProductInfo from './ProductInfo';
-import ProductsList from './ProductsList';
+import config from "../utils/config"
+import Seo from "./Seo"
+import Layout from "./Layout"
+import ProductGallery from "./ProductGallery"
+import ProductInfo from "./ProductInfo"
+import ProductsList from "./ProductsList"
 
 const Container = styled.div`
   &&& {
     margin-top: 3rem;
   }
-`;
+`
 
 const ViewAllBtn = styled(Link)`
   padding-right: 2rem;
   padding-left: 2rem;
-`;
+`
 
 export const query = graphql`
   query ProductViewQuery($slug: String!) {
@@ -33,10 +33,16 @@ export const query = graphql`
         current
       }
       _rawBody
-      variant {
-        color
-        discountPrice
-        price
+
+      otherVariants {
+        color {
+          hex
+        }
+
+        pricing {
+          price
+          discountPrice
+        }
         sku
         featuredImage {
           asset {
@@ -66,10 +72,15 @@ export const query = graphql`
           slug {
             current
           }
-          variant {
-            color
-            discountPrice
-            price
+          otherVariants {
+            color {
+              hex
+            }
+
+            pricing {
+              price
+              discountPrice
+            }
             sku
             featuredImage {
               asset {
@@ -83,12 +94,12 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 
 const ProductView = ({ data }) => {
-  const product = data.sanityProduct;
-  const products = data.allSanityProduct.edges;
-  const home = data.sanitySiteSettings;
+  const product = data.sanityProduct
+  const products = data.allSanityProduct.edges
+  const home = data.sanitySiteSettings
   // console.log('products', products);
 
   // const metaImage = product.featuredImage
@@ -120,7 +131,7 @@ const ProductView = ({ data }) => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default ProductView;
+export default ProductView

@@ -1,19 +1,21 @@
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from "react"
+import { graphql } from "gatsby"
 
-import config from '../utils/config';
-import Seo from '../components/Seo';
-import Layout from '../components/Layout';
-import HomeBanner from '../components/HomeBanner';
-import ProductsList from '../components/ProductsList';
-import HomeAbout from '../components/HomeAbout';
+import config from "../utils/config"
+import Seo from "../components/Seo"
+import Layout from "../components/Layout"
+import HomeBanner from "../components/HomeBanner"
+import ProductsList from "../components/ProductsList"
+import HomeAbout from "../components/HomeAbout"
 
 export const query = graphql`
   query HomePageQuery {
     sanitySiteSettings {
-      homeIntro
-      homeSliderSubTitle
+      homeHeroTitle
+      homeHeroSubTitle
       description
+      email
+      telephone
     }
     allSanityProduct {
       edges {
@@ -23,10 +25,15 @@ export const query = graphql`
           slug {
             current
           }
-          variant {
-            color
-            discountPrice
-            price
+          otherVariants {
+            color {
+              hex
+            }
+
+            pricing {
+              price
+              discountPrice
+            }
             sku
             featuredImage {
               asset {
@@ -40,18 +47,18 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 
 const HomePage = ({ data }) => {
-  const home = data.sanitySiteSettings;
-  const products = data.allSanityProduct.edges;
+  const home = data.sanitySiteSettings
+  const products = data.allSanityProduct.edges
 
   return (
     <Layout>
       <Seo
         title="Latest punjabi suits collection"
-        description={home.description}
-        url={config.siteUrl}
+        description={home?.description || ""}
+        url={config.siteUrl || ""}
       />
       <div className="container">
         <HomeBanner data={home} />
@@ -59,7 +66,7 @@ const HomePage = ({ data }) => {
         <HomeAbout data={home} />
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage
