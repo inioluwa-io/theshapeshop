@@ -1,0 +1,8 @@
+@font-face {font-family: "Tiemann W01 Roman";
+  src: url("780bd60aed99ca32fe458db04d19c87f.eot"); /* IE9*/
+  src: url("780bd60aed99ca32fe458db04d19c87f.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("780bd60aed99ca32fe458db04d19c87f.woff2") format("woff2"), /* chrome、firefox */
+  url("780bd60aed99ca32fe458db04d19c87f.woff") format("woff"), /* chrome、firefox */
+  url("780bd60aed99ca32fe458db04d19c87f.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("780bd60aed99ca32fe458db04d19c87f.svg#Tiemann W01 Roman") format("svg"); /* iOS 4.1- */
+}

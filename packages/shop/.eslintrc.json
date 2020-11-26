@@ -1,0 +1,84 @@
+// {
+//   "root": true,
+//   "parser": "babel-eslint",
+//   "extends": ["airbnb", "prettier"],
+//   "plugins": ["prettier"],
+//   "env": {
+//     "browser": true
+//   },
+//   "globals": {},
+//   "settings": {
+//     "import/core-modules": ["prop-types", "react", "graphql"]
+//   },
+//   "rules": {
+//     "prettier/prettier": [
+//       "error",
+//       {
+//         "singleQuote": true,
+//         "trailingComma": "all",
+//         "bracketSpacing": true,
+//         "jsxBracketSameLine": true
+//       }
+//     ],
+//     "jsx-a11y/anchor-is-valid": 0,
+//     "no-underscore-dangle": 0,
+//     "class-methods-use-this": 0,
+//     "react/jsx-filename-extension": 0,
+//     "react/prop-types": 0,
+//     "react/no-danger": 0,
+//     "react/prefer-stateless-function": 0,
+//     "react/forbid-prop-types": 0,
+//     "react/jsx-one-expression-per-line": 0,
+//     "react/jsx-props-no-spreading": 0,
+//     "react/jsx-closing-bracket-location": 0
+//   }
+// }
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": [
+      "eslint:recommended"
+  ],
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "react",
+      "@typescript-eslint"
+  ],
+  "overrides": [{
+          "files": ["**/*.tsx"],
+          "extends": [
+              "plugin:@typescript-eslint/eslint-recommended",
+              "plugin:@typescript-eslint/recommended",
+              "plugin:react/recommended"
+          ],
+          "excludedFiles": ["*.test.js", "gatsby-node.js", "gatsby-config.js"],
+          "rules": {
+              "react/prop-types": "off",
+              "@typescript-eslint/member-delimiter-style": "off"
+          }
+      },
+      {
+          "files": [
+              ".eslintrc.js",
+              "gatsby-node.js",
+              "gatsby-config.js"
+          ],
+          "env": {
+              "node": true
+          }
+      }
+  ]
+}
