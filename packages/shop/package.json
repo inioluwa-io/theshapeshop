@@ -21,6 +21,7 @@
     "lint": "eslint --ignore-path .gitignore \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
+    "@apollo/client": "^3.2.9",
     "@apollo/react-hooks": "^3.1.0",
     "@sanity/block-content-to-react": "^2.0.6",
     "@types/react": "^17.0.0",

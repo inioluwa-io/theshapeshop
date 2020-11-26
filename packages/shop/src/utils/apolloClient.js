@@ -1,7 +1,12 @@
-import ApolloClient, { ApolloProvider } from "apollo-client"
-import { InMemoryCache } from "apollo-cache-inmemory"
-import { createHttpLink } from "apollo-link-http"
-import { setContext } from "apollo-link-context"
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloProvider,
+} from "@apollo/client"
+import {setContext} from "@apollo/client/link/context"
+// import { InMemoryCache } from "apollo-cache-inmemory"
+// import { setContext } from "apollo-link-context"
 import { CachePersistor } from "apollo-cache-persist"
 
 import config from "./config"
