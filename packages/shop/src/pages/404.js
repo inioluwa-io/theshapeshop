@@ -51,7 +51,7 @@ const NotFoundPage = ({ data }) => {
           <h1 className="title">NOT FOUND</h1>
           <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
           <br />
-          <ProductsList title="We think you'll" products={products.edges} />
+          {/* <ProductsList title="We think you'll" products={products.edges} /> */}
         </Container>
       </section>
     </Layout>
