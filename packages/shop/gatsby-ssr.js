@@ -9,3 +9,4 @@ olark.identify('6377-979-10-6549');`,
     }}
   />,
 ])
+export { wrapRootElement } from './src/utils/apolloClient';
