@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { animated } from "react-spring"
-import { Trail } from "react-spring"
 import Img from "gatsby-image"
 import styled from "styled-components"
 import { LinkButton } from "../ui-components"
@@ -11,8 +10,7 @@ const Container = styled.section`
 
   .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 50px;
+    grid-template-columns: 1fr;
 
     @media (max-width: 801px) {
       grid-template-columns: 1fr;
@@ -59,7 +57,6 @@ const PromotionItem: any = styled(animated.div)`
         grid-gap: 15px;
         padding: 20px;
 
-        
         p {
           color: #fff !important;
         }
@@ -114,23 +111,19 @@ const PromotionItem: any = styled(animated.div)`
 const Image: any = styled(Img)`
   object-fit: cover;
   transition: transform 1s cubic-bezier(0.26, 0.54, 0.32, 1);
-  height: 45vw;
+  height: 32vw;
   width: 100%;
 
   @media (max-width: 991px) {
-    height: 25rem;
-  }
-  
-  @media (max-width: 768px) {
-    height: 22rem;
+    height: 20rem;
   }
 `
 export type PromotedCollectionComponent = {
-  promotions: any[]
+  promotion: any
 }
 
 const PromotedCollection: React.FC<PromotedCollectionComponent> = ({
-  promotions,
+  promotion,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -141,47 +134,36 @@ const PromotedCollection: React.FC<PromotedCollectionComponent> = ({
     }, 200)
   }, [])
 
-  const keys = promotions.map((item, idx) => idx)
-
   return (
-    <Container className="section small-page-width" {...props}>
+    <Container {...props}>
       <div className="grid">
-        <Trail
-          native
-          from={{ opacity: 0 }}
-          to={{ opacity: isOpen ? 1 : 0.25 }}
-          keys={keys}
-        >
-          {promotions.slice(0, 2).map((item, idx) => (styles) => (
-            <PromotionItem key={idx} styles={styles}>
-              <div className="card">
-                <figure className="image">
-                  <Image
-                    fluid={{
-                      src: item.fluid,
-                      aspectRatio: 2,
-                      srcSet: item.img,
-                      sizes: "300px",
-                    }}
-                  />
-                </figure>
-                <figcaption>
-                  <div className="inner-container">
-                    <h5 className="is-uppercase">{item.title}</h5>
-                    <p>{item.description}</p>
-                    <LinkButton
-                      to={`/product/${item.slug}`}
-                      className="is-uppercase"
-                      color={idx === 1 ? "primary" : "secondary"}
-                    >
-                      Shop Now
-                    </LinkButton>
-                  </div>
-                </figcaption>
+        <PromotionItem>
+          <div className="card">
+            <figure className="image">
+              <Image
+                fluid={{
+                  src: promotion.fluid,
+                  aspectRatio: 2,
+                  srcSet: promotion.img,
+                  sizes: "300px",
+                }}
+              />
+            </figure>
+            <figcaption>
+              <div className="inner-container">
+                <h5 className="is-uppercase">{promotion.title}</h5>
+                <p>{promotion.description}</p>
+                <LinkButton
+                  to={`/product/${promotion.slug}`}
+                  className="is-uppercase"
+                  color={"secondary"}
+                >
+                  Shop Now
+                </LinkButton>
               </div>
-            </PromotionItem>
-          ))}
-        </Trail>
+            </figcaption>
+          </div>
+        </PromotionItem>
       </div>
     </Container>
   )

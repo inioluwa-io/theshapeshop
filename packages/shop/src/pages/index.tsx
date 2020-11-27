@@ -74,6 +74,10 @@ const HeroTitle: any = styled.h1`
   line-height: 1.8rem;
   font-weight: 500;
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 15px 0;
+  }
 `
 
 const HomePage = ({ data }) => {
@@ -82,49 +86,6 @@ const HomePage = ({ data }) => {
     allSanityCategory: categories,
     allSanityProduct: products,
   } = data
-  // const products = data.allSanityProduct.edges
-  // const categories = data.allSanityCategory.edges
-
-  const mockCategory = [
-    {
-      fluid: "/images/wear3.jpg",
-      title: "Full body shapers",
-      slug: "full-body-shapers",
-    },
-    {
-      fluid: "/images/wear1.jpg",
-      slug: "buttlifters",
-      title: "Buttlifters",
-    },
-    {
-      fluid: "/images/wear5.jpg",
-      slug: "waist-trainers",
-      title: "Waist trainers",
-    },
-  ]
-  const mockProducts = [
-    {
-      fluid: "/images/wear2.jpg",
-      slug: "products/gym-waist-trainer",
-      title: "Gym waist trainer",
-      price: "4200",
-      discount: "1000",
-    },
-    {
-      fluid: "/images/wear1.jpg",
-      slug: "products/gym-waist-trainer",
-      title: "Gym waist trainer",
-      price: "4200",
-      discount: "1000",
-    },
-    {
-      fluid: "/images/mainbanner.jpg",
-      slug: "products/gym-waist-trainer",
-      title: "Gym waist trainer",
-      price: "4200",
-      discount: undefined,
-    },
-  ]
 
   const mockPromotions = [
     {
@@ -163,6 +124,7 @@ const HomePage = ({ data }) => {
         categories={categories.edges}
       />
       <ProductsList
+        className="section page-width"
         title={"New Products"}
         products={products.edges.slice(0, 4)}
       />

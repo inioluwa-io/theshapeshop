@@ -27,7 +27,6 @@ const Container = styled.section`
 
 const ProductsList = ({ products, title, ...props }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState(null)
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,14 +34,11 @@ const ProductsList = ({ products, title, ...props }) => {
     }, 200)
   }, [])
 
-  const toggleCategory = (category) => setActiveCategory(category)
-
-  const keys = products.map((item, idx) => idx)
-  // const keys = products.map((item) => item.node._id)
+  const keys = products.map((_, idx) => idx)
 
   return (
-    <Container className="section page-width" {...props}>
-      <Heading>{title}</Heading>
+    <Container {...props}>
+      {title && <Heading>{title}</Heading>}
       <div className="grid">
         <Trail
           native
@@ -50,12 +46,9 @@ const ProductsList = ({ products, title, ...props }) => {
           to={{ opacity: isOpen ? 1 : 0.25 }}
           keys={keys}
         >
-          {products.map(({node}) => (styles) => (
+          {products.map(({ node }) => (styles) => (
             <ProductItem key={node._id} item={node} styles={styles} />
           ))}
-          {/* {products.map(({ node }) => styles => (
-              <ProductItem key={node._id} item={node} styles={styles} />
-            ))} */}
         </Trail>
       </div>
     </Container>
@@ -63,7 +56,7 @@ const ProductsList = ({ products, title, ...props }) => {
 }
 
 ProductsList.defaultProps = {
-  title: "New arrivals",
+  title: undefined,
   products: [],
 }
 

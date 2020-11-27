@@ -72,20 +72,21 @@ const ContainerImage = styled.div`
     h2 {
       font-size: 5rem;
       color: #fff !important;
-      font-family: serif;
+      line-height: 5rem;
       text-transform: uppercase;
       font-family: Karla, Arial;
-      // font-family: "Century Gothic";
-      // font-weight: 600;
+    }
+
+    @media (max-width: 991px) {
+      width: 95vw;
+      top: 48%;
+
+      h2 {
+        font-size: 4rem;
+        line-height: 4rem;
+      }
     }
   }
-`
-
-const StripMobile = styled.div`
-  padding: 0.3rem 0;
-  background-color: #100b0b;
-  width: 100%;
-  opacity: 0.9;
 `
 
 const HomeBanner = ({ data }) => {
@@ -121,11 +122,6 @@ const HomeBanner = ({ data }) => {
           <LinkButton to="">Shop Now</LinkButton>
         </div>
       </ContainerImage>
-      <StripMobile className="is-hidden-tablet">
-        <p className="is-size-6	is-uppercase has-text-white has-text-centered has-text-weight-semibold">
-          {data?.homeHeroSubTitle}
-        </p>
-      </StripMobile>
     </React.Fragment>
   )
 }

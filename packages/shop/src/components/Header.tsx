@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { Spring, animated } from "react-spring"
 import { Link } from "gatsby"
@@ -252,6 +252,32 @@ const Header: React.FC<any> = ({ home }) => {
       }
     }
   `)
+  const refs = useRef<HTMLDivElement>()
+
+  const setBarToFixed = useCallback(() => {
+    const DOMNode = refs.current
+    if (DOMNode) {
+      const offset = DOMNode.getBoundingClientRect().top
+
+      if (offset <= -50) {
+        DOMNode.style.position = "sticky"
+        DOMNode.style.width = "100%"
+        DOMNode.style.top = "-50px"
+        DOMNode.style.left = "0"
+      } else {
+        DOMNode.style.position = "relative"
+        DOMNode.style.top = "auto"
+        DOMNode.style.left = "auto"
+      }
+    }
+  }, [refs])
+
+  useEffect(() => {
+    window.addEventListener("scroll", setBarToFixed, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", setBarToFixed)
+    }
+  }, [setBarToFixed])
 
   const [mobileMenuActive, setMobileMenuActive] = useState(false)
   // const { data } = useQuery(cartQuery)
@@ -305,7 +331,7 @@ const Header: React.FC<any> = ({ home }) => {
   }
 
   return (
-    <div className="container" style={{ zIndex: 11 }}>
+    <div className="container" style={{ zIndex: 11 }} ref={refs}>
       <Container
         className="is-hidden-mobile"
         mainBrandColor={theme.mainBrandColor}

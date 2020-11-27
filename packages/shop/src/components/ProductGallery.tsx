@@ -21,6 +21,12 @@ const Container = styled.div`
     width: auto;
     height: 70px;
   }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    top: unset;
+  }
 `
 
 const Thumbnail = styled.div`
@@ -37,6 +43,18 @@ const Thumbnail = styled.div`
 
     &:not(:last-child) {
       margin-bottom: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    button {
+      margin-bottom: 0;
+      width: 12vw;
+      height: 19vw;
+
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
     }
   }
 `
@@ -58,7 +76,7 @@ const Image: any = styled(Img)`
   height: 53vw;
   width: 100%;
   background: #fff;
-  transition: all 0.25s;
+  transition: background 0.25s;
 
   // @media (max-width: 801px) {
   //   height: 40vw;
@@ -67,6 +85,10 @@ const Image: any = styled(Img)`
   // @media (max-width: 550px) {
   //   height: 60vw;
   // }
+
+  @media (max-width: 768px) {
+    height: 90vw;
+  }
 `
 
 const ProductGallery: React.FC<any> = ({ product }) => {

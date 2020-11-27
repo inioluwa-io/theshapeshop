@@ -15,6 +15,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+      allSanityCategory{
+        edges {
+          node {
+            _id
+            slug {
+              current
+            }
+          }
+        }
+      }
       allSanityPage {
         edges {
           node {
@@ -43,12 +53,24 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const products = result.data.allSanityProduct.edges || [];
   const pages = result.data.allSanityPage.edges || [];
+  const category = result.data.allSanityCategory.edges || [];
   const articles = result.data.allSanityArticle.edges || [];
 
   products.forEach(({ node }) => {
     createPage({
       path: `product/${node.slug.current}`,
       component: path.resolve(`src/components/ProductView.js`),
+      // additional data can be passed via context
+      context: {
+        slug: node.slug.current,
+      },
+    });
+  });
+
+  category.forEach(({ node }) => {
+    createPage({
+      path: `collections/${node.slug.current}`,
+      component: path.resolve(`src/components/CollectionView.tsx`),
       // additional data can be passed via context
       context: {
         slug: node.slug.current,

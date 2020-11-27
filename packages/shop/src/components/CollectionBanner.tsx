@@ -1,14 +1,14 @@
-import React, { useRef }  from "react"
+import React from "react"
+import { useEffect } from "react"
+import { useCallback } from "react"
+import { useRef } from "react"
 import styled from "styled-components"
-import { LinkButton } from "../ui-components"
-
-import config from "../utils/config"
 
 const ContainerImage = styled.div`
   width: 100%;
   height: auto;
   overflow: hidden;
-  height: 110vh;
+  height: 65vh;
   position: relative;
   background: #101010;
 
@@ -30,7 +30,7 @@ const ContainerImage = styled.div`
 
   .img {
     min-width: 100%;
-    min-height: 150vh;
+    min-height: 65vh;
     height: auto;
     position: relative;
     background-size: cover;
@@ -60,44 +60,51 @@ const ContainerImage = styled.div`
     width: 60rem;
     text-align: center;
     grid-gap: 15px;
-
-    p {
-      color: #fff !important;
-      font-size: 1.35rem;
-    }
-
-    h2 {
+    
+    h1 {
       font-size: 5rem;
       line-height: 5rem;
       color: #fff !important;
       font-family: serif;
       text-transform: uppercase;
       font-family: Karla, Arial;
-      // font-family: "Century Gothic";
-      // font-weight: 600;
     }
   }
 `
-
-const AboutBanner = ({ data }) => {
+const CollectionBanner = ({ data }) => {
   const refs = useRef<HTMLDivElement>()
+  const parallaxEffect = useCallback(() => {
+    const DOMNode = refs.current
+    if (DOMNode) {
+      const offset = DOMNode.getBoundingClientRect().top / 7 - 100
+      DOMNode.style.transform = `translate3d(0px, ${offset}px, 0px)`
+    }
+  }, [refs])
+
+//   useEffect(() => {
+//     parallaxEffect()
+//     window.addEventListener("scroll", parallaxEffect, { passive: true })
+//     return () => {
+//       window.removeEventListener("scroll", parallaxEffect)
+//     }
+//   }, [parallaxEffect])
   return (
     <React.Fragment>
       <ContainerImage className="">
         <div className="img-container" ref={refs}>
           <div
             className="img"
-            style={{ backgroundImage: "url(" + config.aboutBannerImage + ")" }}
+            style={{
+              backgroundImage: "url(" + data.image.asset.fluid.src + ")",
+            }}
           ></div>
         </div>
-        {/* <img src={config.aboutBannerImage} alt="about banner" /> */}
         <div className="hero page-width">
-          <h2>{data?.aboutHeroTitle}</h2>
-          <p>{data?.aboutHeroSubTitle}</p>
+          <h1>{data?.title}</h1>
         </div>
       </ContainerImage>
     </React.Fragment>
   )
 }
 
-export default AboutBanner
+export default CollectionBanner

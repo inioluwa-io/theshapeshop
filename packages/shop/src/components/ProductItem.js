@@ -31,6 +31,7 @@ const Container = styled(animated.div)`
     }
     .card-content {
       padding-left: 0;
+      padding-right: 0;
       padding-top: 0.8rem;
       position: relative;
       a {

@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import styled from "styled-components"
 import { LinkButton } from "../ui-components"
 import config from "../utils/config"
@@ -101,7 +101,9 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   grid-gap: 60px;
-  && {
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
 `
 
@@ -132,9 +134,10 @@ const ProductView = ({ data }) => {
           <ProductInfo home={home} product={product} />
         </Container>
       </div>
-      {products.edges.length && (
+      {!!products.edges.length && (
         <div className="section small-page-width">
           <ProductsList
+            className="section page-width"
             title="We think you'll like"
             products={products.edges}
           />
