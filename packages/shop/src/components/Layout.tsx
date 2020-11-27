@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, { useEffect } from "react"
 import Helmet from "react-helmet"
 import styled, { ThemeProvider } from "styled-components"
 import { ApolloProvider } from "@apollo/react-hooks"
@@ -32,9 +32,9 @@ const query = graphql`
 `
 
 const IndexLayout: React.FC<any> = ({ children, hideHeader }) => {
-  useEffect(()=>{
+  useEffect(() => {
     // const doc = document.append()
-  },[])
+  }, [])
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
@@ -42,6 +42,10 @@ const IndexLayout: React.FC<any> = ({ children, hideHeader }) => {
           <Helmet>
             <title>{config.siteName}</title>
             <meta charSet="utf-8" />
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+            />
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
