@@ -93,11 +93,11 @@ const AboutPage: React.FC<any> = ({ data }) => {
           sizes: "100px",
         }}
       />
-      <ProductsList
+      {/* <ProductsList
         style={{ marginTop: "6rem" }}
         title={"Visit our Store"}
         products={mockProducts.slice(0, 4)}
-      />
+      /> */}
     </Layout>
   )
 }
