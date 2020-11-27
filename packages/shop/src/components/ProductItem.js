@@ -99,7 +99,7 @@ const ProductItem = ({ item, styles }) => (
               <Link to={`/product/${item.slug.current}`}>{item.title}</Link>
             </p>
             {item.otherVariants[0] && (
-              <p className="price">N{item.otherVariants[0].pricing.price}</p>
+              <p className="price">N{item.otherVariants[0].pricing[0].price}</p>
             )}
           </div>
         </div>
