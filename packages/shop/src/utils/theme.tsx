@@ -65,6 +65,11 @@ const GlobalStyle = createGlobalStyle`
   }
   *{
     overflow: unset;
+    color: ${theme.textColor};
+    font-size: 16px;
+    line-height:normal;
+    letter-spacing: normal;
+    font-family: Karla, Arial;
     // scroll-behavior: smooth;
   }
   .button {
@@ -118,6 +123,9 @@ const GlobalStyle = createGlobalStyle`
   .small-page-width{
     padding: 0 20px;
   }
+  .container {
+    max-width: initial !important;
+}
 
   .section {
     padding: 3rem 1.5rem;
