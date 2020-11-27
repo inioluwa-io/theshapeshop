@@ -69,11 +69,8 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     line-height:normal;
     letter-spacing: normal;
-    font-family: Karla, Arial;
+    font-family: Karla, Arial !important;
     // scroll-behavior: smooth;
-  }
-  .button {
-    font-family: ${theme.primaryFontFamily};
   }
   p {
   }

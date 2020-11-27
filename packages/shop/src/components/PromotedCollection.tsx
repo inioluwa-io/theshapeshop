@@ -59,7 +59,7 @@ const PromotionItem: any = styled(animated.div)`
         grid-gap: 15px;
         padding: 20px;
 
-        color: #fff;
+        
         p {
           color: #fff !important;
         }
@@ -69,6 +69,7 @@ const PromotionItem: any = styled(animated.div)`
           letter-spacing: 2px;
           font-weight: 500;
           text-align: center;
+          color: #fff;
         }
         p {
           font-size: 1.8rem;

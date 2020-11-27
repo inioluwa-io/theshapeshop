@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 import SocialIcons from "./SocialIcons"
 import config from "../utils/config"
+import { theme } from "../utils/theme"
 import SubscribeForm from "./SubscribeForm"
 import ScrollButton from "./ScrollButton"
 
@@ -33,6 +34,8 @@ const Container = styled.footer`
 
     li a {
       transition: color 0.25s;
+      color: ${theme.textColor};
+
       &:hover {
         color: ${config.primaryColor} !important;
       }

@@ -38,30 +38,40 @@ const IndexLayout: React.FC<any> = ({ children, hideHeader }) => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <Helmet>
-          <title>{config.siteName}</title>
-          <meta charSet="utf-8" />
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+        <ApolloProvider client={apolloClient}>
+          <Helmet>
+            <title>{config.siteName}</title>
+            <meta charSet="utf-8" />
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+            />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200&display=swap"
+            />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <meta name="description" content={config.description} />
+          </Helmet>
+          <GlobalStyle />
+          <StaticQuery
+            query={query}
+            render={(data) => {
+              const home = data.sanitySiteSettings
+              return (
+                <>
+                  {!hideHeader && <Header home={home} />}
+                  <Container>{children}</Container>
+                  <Footer home={home} />
+                </>
+              )
+            }}
           />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="description" content={config.description} />
-        </Helmet>
-        <GlobalStyle />
-        <StaticQuery
-          query={query}
-          render={(data) => {
-            const home = data.sanitySiteSettings
-            return (
-              <>
-                {!hideHeader && <Header home={home} />}
-                <Container>{children}</Container>
-                <Footer home={home} />
-              </>
-            )
-          }}
-        />
+        </ApolloProvider>
       </>
     </ThemeProvider>
   )
