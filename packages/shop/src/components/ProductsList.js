@@ -50,8 +50,8 @@ const ProductsList = ({ products, title, ...props }) => {
           to={{ opacity: isOpen ? 1 : 0.25 }}
           keys={keys}
         >
-          {products.map((item, idx) => (styles) => (
-            <ProductItem key={idx} item={item} styles={styles} />
+          {products.map(({node}) => (styles) => (
+            <ProductItem key={node._id} item={node} styles={styles} />
           ))}
           {/* {products.map(({ node }) => styles => (
               <ProductItem key={node._id} item={node} styles={styles} />

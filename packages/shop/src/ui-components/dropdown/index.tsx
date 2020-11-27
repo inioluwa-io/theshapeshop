@@ -79,24 +79,17 @@ const Dropdown: React.FC<DropdownCopmonent> = ({
       {children}
       <MegaMenu className="mega-menu">
         <div className="inner-container">
-          {list.map((item, idx: number) => (
+          {list.map(({ node: item }, idx: number) => (
             <Link
-              to={item?.url || "/"}
-              title={item.title}
+              to={"/collections/"+item?.slug?.current || "/"}
+              title={item?.title}
               className="each-menu"
               key={idx}
             >
               <div className="img">
-                <Image
-                  fluid={{
-                    src: item.img,
-                    aspectRatio: 2,
-                    srcSet: item.img,
-                    sizes: "300px",
-                  }}
-                />
+                <Image fluid={item?.image.asset.fluid} alt={item.title} />
               </div>
-              <h5 className="is-uppercase">{item.title}</h5>
+              <h5 className="is-uppercase">{item?.title}</h5>
 
               <span>View all</span>
             </Link>

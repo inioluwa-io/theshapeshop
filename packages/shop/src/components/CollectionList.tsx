@@ -47,8 +47,8 @@ const CollectionList: React.FC<{ title: string; categories: any[] }> = ({
           to={{ opacity: isOpen ? 1 : 0.25 }}
           keys={keys}
         >
-          {categories.map((item, idx) => (styles) => (
-            <CollectionItem key={idx} item={item} styles={styles} />
+          {categories.map(({ node }) => (styles) => (
+            <CollectionItem key={node._id} item={node} styles={styles} />
           ))}
         </Trail>
       </div>

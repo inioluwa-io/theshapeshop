@@ -216,7 +216,7 @@ const ProductInfo = ({ product, home }) => {
     <Container>
       <h1 className="">{product.title}</h1>
       <Price className="has-text-weight-semibold">
-        <span>{formatCurrency(product.price)}</span>
+        <span>N{product.otherVariants[0].pricing[0].price}</span>
         {/* {formatCurrency(product.variant.discountPrice)}{' '}
         {product.variant.discountPrice < product.variant.price && (
           <span>{formatCurrency(product.variant.price)}</span>
@@ -225,12 +225,12 @@ const ProductInfo = ({ product, home }) => {
       <div className="sub-panel">
         <p>Color:</p>
         <div className="flex">
-          <Color color={product.color}>
+          <Color color={product.otherVariants[0].color.hex}>
             <input
               name="color"
               id="color1"
               type="radio"
-              value={product.color}
+              value={product.otherVariants[0].color.hex}
               defaultChecked
             />
             <label htmlFor="color1">
@@ -263,11 +263,11 @@ const ProductInfo = ({ product, home }) => {
                 <AccordionItemBody>
                   {product._rawBody && (
                     <>
-                      {/* <BlockContent blocks={product._rawBody.en || []} /> */}
-                      <HTMLContent
+                      <BlockContent blocks={product._rawBody.en || []} />
+                      {/* <HTMLContent
                         content={product.__rawBody.en}
                         className=""
-                      />
+                      /> */}
                     </>
                   )}
                   {/* <HTMLContent

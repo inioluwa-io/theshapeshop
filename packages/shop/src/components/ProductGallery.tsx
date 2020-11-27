@@ -71,15 +71,14 @@ const Image: any = styled(Img)`
 
 const ProductGallery: React.FC<any> = ({ product }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-  const images = product?.images
-  let zoom
+  const images = product?.otherVariants[0].images
 
   const handleThumbnailClick = (idx: number): void => {
     setSelectedImageIndex(idx)
   }
 
   useEffect(() => {
-    zoom = mediumZoom(document.querySelectorAll(".zoomable img"), {
+    const zoom = mediumZoom(document.querySelectorAll(".zoomable img"), {
       margin: 0,
       background: "#fff",
       scrollOffset: 20,
@@ -99,26 +98,14 @@ const ProductGallery: React.FC<any> = ({ product }) => {
             }}
             className={selectedImageIndex === idx ? "active" : ""}
           >
-            <ThumbnailImage
-              fluid={{
-                src: image.asset.fluid,
-                aspectRatio: 2,
-                srcSet: image.asset.fluid,
-                sizes: "300px",
-              }}
-            />
+            <ThumbnailImage fluid={image.asset.fluid} />
           </button>
         ))}
       </Thumbnail>
       <Image
         data-zoomable
         className="zoomable"
-        fluid={{
-          src: images[selectedImageIndex].asset.fluid,
-          aspectRatio: 2,
-          srcSet: images[selectedImageIndex].asset.fluid,
-          sizes: "300px",
-        }}
+        fluid={images[selectedImageIndex].asset.fluid}
       />
     </Container>
   )

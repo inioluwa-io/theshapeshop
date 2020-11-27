@@ -18,6 +18,23 @@ export const query = graphql`
       email
       telephone
     }
+    allSanityCategory {
+      edges {
+        node {
+          slug {
+            current
+          }
+          title
+          image {
+            asset {
+              fluid(maxWidth: 350) {
+                ...GatsbySanityImageFluid
+              }
+            }
+          }
+        }
+      }
+    }
     allSanityProduct {
       edges {
         node {
@@ -27,16 +44,18 @@ export const query = graphql`
             current
           }
           otherVariants {
-            color {
-              hex
-            }
-
             pricing {
               price
               discountPrice
             }
-            sku
             featuredImage {
+              asset {
+                fluid(maxWidth: 700) {
+                  ...GatsbySanityImageFluid
+                }
+              }
+            }
+            images {
               asset {
                 fluid(maxWidth: 700) {
                   ...GatsbySanityImageFluid
@@ -58,8 +77,13 @@ const HeroTitle: any = styled.h1`
 `
 
 const HomePage = ({ data }) => {
-  const home = data.sanitySiteSettings
-  const products = data.allSanityProduct.edges
+  const {
+    sanitySiteSettings: home,
+    allSanityCategory: categories,
+    allSanityProduct: products,
+  } = data
+  // const products = data.allSanityProduct.edges
+  // const categories = data.allSanityCategory.edges
 
   const mockCategory = [
     {
@@ -134,10 +158,13 @@ const HomePage = ({ data }) => {
         </HeroTitle>
       </div>
       <PromotedCollection promotions={mockPromotions} />
-      <CollectionList title="Shop by Collections" categories={mockCategory} />
+      <CollectionList
+        title="Shop by Collections"
+        categories={categories.edges}
+      />
       <ProductsList
         title={"New Products"}
-        products={mockProducts.slice(0, 4)}
+        products={products.edges.slice(0, 4)}
       />
     </Layout>
   )

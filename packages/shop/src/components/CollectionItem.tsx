@@ -113,16 +113,9 @@ const CollectionItem: React.FC<CollectionItemComponent> = ({
   return (
     <Container style={styles} title={item.title}>
       <div className="card">
-        <Link to={`/collections/${item.slug}`}>
+        <Link to={`/collections/${item?.slug?.current}`}>
           <figure className="image">
-            <Image
-              fluid={{
-                src: item.fluid,
-                aspectRatio: 2,
-                srcSet: item.img,
-                sizes: "300px",
-              }}
-            />
+            <Image fluid={item.image.asset.fluid} />
           </figure>
           <figcaption className="is-uppercase">{item.title}</figcaption>
         </Link>

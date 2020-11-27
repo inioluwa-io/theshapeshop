@@ -8,10 +8,11 @@ import gql from "graphql-tag"
 import config from "../utils/config"
 import SocialIcons from "./SocialIcons"
 import { theme } from "../utils/theme"
+import { graphql, useStaticQuery } from "gatsby"
 import { Dropdown, ListDropdown } from "../ui-components"
 
 const cartQuery = gql`
-  query CartItems {
+  query HeaderQuery {
     cartItems @client {
       id
     }
@@ -229,9 +230,33 @@ const Announcement: React.FC<{ slide: string[] }> = ({ slide }) => (
 )
 
 const Header: React.FC<any> = ({ home }) => {
+  const data: any = useStaticQuery(graphql`
+    query HeaderQuery {
+      allSanityCategory {
+        edges {
+          node {
+            _id
+            slug {
+              current
+            }
+            title
+            image {
+              asset {
+                fluid(maxWidth: 250) {
+                  ...GatsbySanityImageFluid
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
   const [mobileMenuActive, setMobileMenuActive] = useState(false)
-  const { data } = useQuery(cartQuery)
-  const cartItems = data ? data.cartItems || [] : []
+  // const { data } = useQuery(cartQuery)
+  // const cartItems = data ? data.cartItems || [] : []
+  const { allSanityCategory } = data
 
   const cart = (
     <Cart>
@@ -318,7 +343,7 @@ const Header: React.FC<any> = ({ home }) => {
                 return (
                   <React.Fragment key={item.id}>
                     {item.name === "Collections" ? (
-                      <Dropdown list={collectionItems}>
+                      <Dropdown list={allSanityCategory.edges}>
                         <Link
                           to={item.url}
                           className="my-navbar-text is-uppercase"

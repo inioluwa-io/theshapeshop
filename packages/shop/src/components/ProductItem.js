@@ -64,20 +64,13 @@ const Image = styled(Img)`
 `
 
 const ProductItem = ({ item, styles }) => (
-  <Container className="" style={styles} title = {item.title}>
+  <Container className="" style={styles} title={item.title}>
     <div className="card">
-      {item.fluid && (
+      {item.otherVariants && (
         <div className="card-image">
           <Link to={`/product/${item.slug.current}`}>
             <figure className="image is-4by5">
-              <Image
-                fluid={{
-                  src: item.fluid,
-                  aspectRatio: 2,
-                  srcSet: item.fluid,
-                  sizes: "300px",
-                }}
-              />
+              <Image fluid={item.otherVariants[0].featuredImage.asset.fluid} />
               {/* <Image
                 sizes={item.variant.featuredImage.asset.fluid.sizes}
                 alt={item.variant.featuredImage.asset.fluid.title}
@@ -105,14 +98,9 @@ const ProductItem = ({ item, styles }) => (
             <p className="name" style={{ maxWidth: "88%" }}>
               <Link to={`/product/${item.slug.current}`}>{item.title}</Link>
             </p>
-            {item.variant && (
-              <div className="price-container has-text-right">
-                <p className="title is-5 has-text-weight-normal price">
-                  {formatCurrency(item.variant.discountPrice)}
-                </p>
-              </div>
+            {item.otherVariants[0] && (
+              <p className="price">N{item.otherVariants[0].pricing.price}</p>
             )}
-            <p className="price">N{item.price}</p>
           </div>
         </div>
       </div>

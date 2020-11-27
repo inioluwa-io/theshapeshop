@@ -1,30 +1,24 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import styled from "styled-components"
-
+import { LinkButton } from "../ui-components"
 import config from "../utils/config"
-import Seo from "./Seo"
-import Layout from "./Layout"
-import ProductGallery from "./ProductGallery"
-import ProductInfo from "./ProductInfo"
-import ProductsList from "./ProductsList"
-
-const Container = styled.div`
-  &&& {
-    margin-top: 3rem;
-  }
-`
-
-const ViewAllBtn = styled(Link)`
-  padding-right: 2rem;
-  padding-left: 2rem;
-`
+import Seo from "../components/Seo"
+import Layout from "../components/Layout"
+import ProductGallery from "../components/ProductGallery"
+import ProductInfo from "../components/ProductInfo"
+import ProductsList from "../components/ProductsList"
 
 export const query = graphql`
   query productViewQueryAndProductViewQuery($slug: String!) {
     sanitySiteSettings {
+      homeHeroTitle
+      homeHeroSubTitle
+      description
+      email
       productDeliveryInfo
       productShippingReturns
+      telephone
     }
     sanityProduct(slug: { current: { eq: $slug } }) {
       _id
@@ -89,6 +83,13 @@ export const query = graphql`
                 }
               }
             }
+            images {
+              asset {
+                fluid(maxWidth: 700) {
+                  ...GatsbySanityImageFluid
+                }
+              }
+            }
           }
         }
       }
@@ -96,10 +97,21 @@ export const query = graphql`
   }
 `
 
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-gap: 60px;
+  && {
+  }
+`
+
 const ProductView = ({ data }) => {
-  const product = data.sanityProduct
-  const products = data.allSanityProduct.edges
-  const home = data.sanitySiteSettings
+  const {
+    sanitySiteSettings: home,
+    sanityProduct: product,
+    allSanityProduct: products,
+  } = data
+
   // console.log('products', products);
 
   // const metaImage = product.featuredImage
@@ -110,26 +122,27 @@ const ProductView = ({ data }) => {
     <Layout>
       <Seo
         title={product.title}
-        url={`${config.siteUrl}/product/${product.slug}`}
+        url={`${config.siteUrl}/product/${product.slug.current}`}
         // image={metaImage}
-        isProduct
+        // isProduct
       />
-      <div className="container">
-        <Container className="columns">
-          <div className="column is-two-fifths">
-            <ProductGallery product={product} />
-          </div>
-          <div className="column section">
-            <ProductInfo home={home} product={product} />
-          </div>
+      <div className="section small-page-width">
+        <Container>
+          <ProductGallery product={product} />
+          <ProductInfo home={home} product={product} />
         </Container>
-        <ProductsList title="We think you'll" products={products} />
-        <div className="has-text-centered	">
-          <ViewAllBtn to="/" className="button is-outlined is-medium">
-            View all
-          </ViewAllBtn>
-        </div>
       </div>
+      {products.edges.length && (
+        <div className="section small-page-width">
+          <ProductsList
+            title="We think you'll like"
+            products={products.edges}
+          />
+          <div className="has-text-centered	">
+            <LinkButton to="/">View all</LinkButton>
+          </div>
+        </div>
+      )}
     </Layout>
   )
 }
