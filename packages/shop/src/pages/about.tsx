@@ -40,6 +40,7 @@ const Image = styled(Img)`
 `
 const mockProducts = [
   {
+    _id:"123",
     fluid: "/images/wear2.jpg",
     slug: "products/gym-waist-trainer",
     title: "Gym waist trainer",
@@ -47,6 +48,7 @@ const mockProducts = [
     discount: "1000",
   },
   {
+    _id:"ruh8i",
     fluid: "/images/wear1.jpg",
     slug: "products/gym-waist-trainer",
     title: "Gym waist trainer",
@@ -54,6 +56,7 @@ const mockProducts = [
     discount: "1000",
   },
   {
+    _id:"2oifh2",
     fluid: "/images/mainbanner.jpg",
     slug: "products/gym-waist-trainer",
     title: "Gym waist trainer",
