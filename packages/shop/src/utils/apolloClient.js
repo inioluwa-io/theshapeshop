@@ -5,6 +5,7 @@ import { createHttpLink } from "apollo-link-http"
 import { setContext } from "apollo-link-context"
 import { CachePersistor } from "apollo-cache-persist"
 import fetch from "cross-fetch"
+import React from "react"
 
 import config from "./config"
 import { resolvers, typeDefs } from "./localState"
