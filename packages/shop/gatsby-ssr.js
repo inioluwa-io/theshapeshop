@@ -11,3 +11,5 @@ olark.identify('6377-979-10-6549');`,
 
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" />,
 ])
+
+export { wrapRootElement } from "./src/utils/apolloClient"
