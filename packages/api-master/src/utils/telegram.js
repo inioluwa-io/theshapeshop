@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import config from './config';
+
 const telegramUrl = config.get('telegram.url');
 const telegramChatId = config.get('telegram.chatId');
 
