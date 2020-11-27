@@ -84,6 +84,11 @@ const Container: any = styled.div`
 `
 
 const ContainerMobile = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
+
   .min-my-navbar {
     display: flex;
     justify-content: space-between;
@@ -393,30 +398,23 @@ const Header: React.FC<any> = ({ home }) => {
   `)
   const refs = useRef<HTMLDivElement>()
 
-  const setBarToFixed = useCallback(
-    () => {
-      const DOMNode = refs.current
-      if (DOMNode) {
-        const container = DOMNode.querySelector(
-          "#main-head-con.is-hidden-mobile"
-        ) as HTMLDivElement
+  const setBarToFixed = useCallback(() => {
+    const DOMNode = refs.current
+    if (DOMNode) {
+      const offset = DOMNode.getBoundingClientRect().top
 
-        if (window.scrollY > 50) {
-          DOMNode.style.position = "sticky"
-          DOMNode.style.width = "100%"
-          DOMNode.style.top = "0px"
-          DOMNode.style.left = "0"
-          container.style.transform = "translateY(-50px)"
-        } else {
-          DOMNode.style.position = "relative"
-          DOMNode.style.top = "auto"
-          DOMNode.style.left = "auto"
-          container.style.transform = "translateY(0px)"
-        }
+      if (offset <= -50) {
+        DOMNode.style.position = "sticky"
+        DOMNode.style.width = "100%"
+        DOMNode.style.top = "-50px"
+        DOMNode.style.left = "0"
+      } else {
+        DOMNode.style.position = "relative"
+        DOMNode.style.top = "auto"
+        DOMNode.style.left = "auto"
       }
-    },
-    [refs]
-  )
+    }
+  }, [refs])
 
   useEffect(() => {
     window.addEventListener("scroll", setBarToFixed, { passive: true })
@@ -470,7 +468,6 @@ const Header: React.FC<any> = ({ home }) => {
   return (
     <div className="container" style={{ zIndex: 11 }} ref={refs}>
       <Container
-        id="main-head-con"
         className="is-hidden-mobile"
         mainBrandColor={theme.mainBrandColor}
       >
@@ -538,6 +535,7 @@ const Header: React.FC<any> = ({ home }) => {
 
       {/* Mobile */}
       <ContainerMobile className="is-hidden-tablet">
+        <Announcement slide={["Everything under N6,000"]} />
         <header>
           <nav
             className="my-navbar"
@@ -588,7 +586,6 @@ const Header: React.FC<any> = ({ home }) => {
             </Cart>
           </nav>
         </header>
-
         <Spring
           native
           from={{
