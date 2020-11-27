@@ -1,3 +1,3 @@
-const server = require('../src/server');
+const server = require('./bundle/server');
 
 module.exports = server;
