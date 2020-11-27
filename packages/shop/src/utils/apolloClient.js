@@ -4,22 +4,24 @@ import { InMemoryCache } from "apollo-cache-inmemory"
 import { createHttpLink } from "apollo-link-http"
 import { setContext } from "apollo-link-context"
 import { CachePersistor } from "apollo-cache-persist"
+import fetch from "cross-fetch"
 
 import config from "./config"
 import { resolvers, typeDefs } from "./localState"
 
 const httpLink = createHttpLink({
   uri: config.debug ? config.graphQlUriDev : config.graphQlUri,
+  fetch
 })
 
 const cache = new InMemoryCache()
 
-export const persistor = new CachePersistor({
-  cache,
-  storage: window.localStorage,
-  debug: config.debug,
-})
-persistor.restore()
+// export const persistor = new CachePersistor({
+//   cache,
+//   storage: window.localStorage,
+//   debug: config.debug,
+// })
+// persistor.restore()
 
 const authLink = setContext(async (_, { headers }) => {
   const token = window.localStorage.getItem("token")
@@ -37,13 +39,14 @@ const authLink = setContext(async (_, { headers }) => {
 // persistor.purge(); // clear local storage
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: httpLink,
+  // link: authLink.concat(httpLink),
   cache,
   typeDefs,
   resolvers,
 })
 
-const wrapRootElement = ({ element }) => {
+export const wrapRootElement = ({ element }) => {
   return <ApolloProvider client={client}>{element}</ApolloProvider>
 }
 
