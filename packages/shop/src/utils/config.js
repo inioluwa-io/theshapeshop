@@ -7,7 +7,8 @@ module.exports = {
     "A ecommerce system using ReactJs, bundled with awesome GatsbyJs.",
   siteUrl: "http://kickoff-gatsbyjs.netlify.com",
   logo: "/images/THE SHAPE SHOP-101.png",
-  graphQlUri: "https://api-euwest.graphcms.com/v1/cjke2kn7p00ol01d2pinkptdj/master",
+  graphQlUri:
+    "https://api-euwest.graphcms.com/v1/cjke2kn7p00ol01d2pinkptdj/master",
   graphQlUriDev: "http://localhost:4000/",
 
   homeBannerImage: "/images/wear4.jpg",
@@ -18,7 +19,7 @@ module.exports = {
   themeColor: "#c62828",
   primaryColor: "#aa4b34",
 
-  currency: "N",
+  currency: "₦",
   stripePublishableKey:
     process.env.NODE_ENV === "development"
       ? "pk_test_P0DEB2otulfya51U9lIkLXAn"

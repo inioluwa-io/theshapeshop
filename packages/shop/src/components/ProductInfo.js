@@ -17,18 +17,7 @@ import { FacebookShareButton, TwitterShareButton } from "react-share"
 import { Button } from "../ui-components"
 import config from "../utils/config"
 import { formatCurrency } from "../utils/helpers"
-import { BlockContent, HTMLContent } from "./Content"
-import Heading from "./Heading"
-
-// const cartQuery = graphql`
-//   query {
-//     cart @client {
-//       __typename
-//       items
-//       count
-//     }
-//   }
-// `;
+import { BlockContent } from "./Content"
 
 const Price = styled.div`
   span {
@@ -172,7 +161,6 @@ const ProductInfo = ({ product, home }) => {
   const client = useApolloClient()
   const { data } = useQuery(cartQuery)
   const { cartItems } = data || {}
-  // console.log('product', product);
 
   useEffect(() => {
     setTimeout(() => {
@@ -216,11 +204,7 @@ const ProductInfo = ({ product, home }) => {
     <Container>
       <h1 className="">{product.title}</h1>
       <Price className="has-text-weight-semibold">
-        <span>N{product.otherVariants[0].pricing[0].price}</span>
-        {/* {formatCurrency(product.variant.discountPrice)}{' '}
-        {product.variant.discountPrice < product.variant.price && (
-          <span>{formatCurrency(product.variant.price)}</span>
-        )} */}
+        <span>{formatCurrency(product.otherVariants[0].pricing[0].price)}</span>
       </Price>
       <div className="sub-panel">
         <p>Color:</p>
@@ -264,20 +248,13 @@ const ProductInfo = ({ product, home }) => {
                   {product._rawBody && (
                     <>
                       <BlockContent blocks={product._rawBody.en || []} />
-                      {/* <HTMLContent
-                        content={product.__rawBody.en}
-                        className=""
-                      /> */}
                     </>
                   )}
-                  {/* <HTMLContent
-                    content={product.shortDetails.childMarkdownRemark.html}
-                  /> */}
-                  {/* <p>Color: {product.variant.color}</p> */}
+                  
                   {product.sku && (
                     <ProductCode>Product Code: {product.sku}</ProductCode>
                   )}
-                  {/* <ProductCode>Product Code: {product.variant.sku}</ProductCode> */}
+                  
                 </AccordionItemBody>
               </AccordionItem>
               <AccordionItem allowMultipleExpanded>

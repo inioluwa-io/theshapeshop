@@ -3,10 +3,13 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 
 const Container: any = styled.section`
-  width: 120px;
-  min-height: 26px;
+  // width: 120px;
+  // min-height: 26px;
+  display: block !important;
+
   .level-item {
-    margin-right: 0.3rem;
+    margin-right: 1.2rem;
+    display: inline-block;
     a {
       padding: 0 !important;
     }

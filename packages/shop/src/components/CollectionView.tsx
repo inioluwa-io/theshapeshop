@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/Layout"
 import config from "../utils/config"
+import { formatCurrency } from "../utils/helpers"
 import Seo from "../components/Seo"
-import CollectionBanner from "./CollectionBanner"
+import InputRange from "react-input-range"
+import "react-input-range/lib/css/index.css"
 import styled from "styled-components"
 import PromotedBanner from "./PromotedBanner"
 import {
@@ -128,6 +130,19 @@ const CollectionPanel: any = styled.div`
 const ControlPanel: any = styled.div`
   position: sticky;
   top: 110px;
+
+  .input-range__track--active {
+    background: ${config.primaryColor};
+  }
+  .input-range__slider {
+    background: ${config.primaryColor};
+    border-color: ${config.primaryColor};
+    box-shadow: 0 0 2px #000000aa;
+  }
+  .input-range__label--max,
+  .input-range__label--min {
+    visibility: hidden;
+  }
 `
 const HeroTitle: any = styled.h1`
   font-size: 4rem;
@@ -138,12 +153,18 @@ const HeroTitle: any = styled.h1`
 
   @media (max-width: 768px) {
     padding: 15px 0;
-    width: 95vw;
+    width: 95%;
   }
 `
 
+type RangeProps = { max: number; min: number }
+
 const CollectionView: React.FC<any> = ({ data }) => {
   const { sanityCategory, allSanityProduct } = data
+  const [value, setValue] = useState<RangeProps>({
+    min: 0,
+    max: 50,
+  })
 
   return (
     <Layout>
@@ -164,7 +185,16 @@ const CollectionView: React.FC<any> = ({ data }) => {
                 <AccordionItemTitle>
                   <h3>Price</h3>
                 </AccordionItemTitle>
-                <AccordionItemBody>fhir</AccordionItemBody>
+                <AccordionItemBody>
+                  <InputRange
+                    maxValue={50}
+                    draggableTrack={true}
+                    formatLabel={(value) => `${formatCurrency(value)}`}
+                    minValue={0}
+                    value={value}
+                    onChange={(value: RangeProps) => setValue(value)}
+                  />
+                </AccordionItemBody>
               </AccordionItem>
 
               <AccordionItem expanded>

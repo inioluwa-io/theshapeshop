@@ -2,7 +2,12 @@ import React, { useEffect, useState, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { Spring, animated } from "react-spring"
 import { Link } from "gatsby"
-import { useQuery } from "@apollo/react-hooks"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTitle,
+  AccordionItemBody,
+} from "react-accessible-accordion"
 import gql from "graphql-tag"
 
 import config from "../utils/config"
@@ -79,18 +84,93 @@ const Container: any = styled.div`
 `
 
 const ContainerMobile = styled.div`
-  position: relative;
-  img {
-    width: 100px;
-    margin-top: 1rem;
-    margin-left: 1rem;
+  .min-my-navbar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+
+    .column {
+      padding: 0.2rem 0;
+    }
+  }
+
+  a {
+    color: #4a4a4a;
+  }
+  .logo-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  .my-navbar {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 4rem 1fr 4rem;
+  }
+  .my-my-navbar-menu {
+    text-align: center;
+    display: block;
+
+    a {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      padding: 6px 4px;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 300ms cubic-bezier(0.2, 0.06, 0.05, 0.95);
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      &.my-navbar-text {
+        letter-spacing: 1px;
+        color: ${theme.lightShades};
+      }
+
+      &.my-navbar-text:hover,
+      &.my-navbar-text.active {
+        color: ${theme.primaryColor};
+      }
+    }
+  }
+  img.logo {
+    max-width: 180px;
   }
   .menu-trigger {
-    position: absolute;
-    top: 4rem;
-    right: 1rem;
-    font-size: 1.4rem;
-    color: #4a4a4a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .icon {
+      height: 30px;
+      width: 30px;
+      fill: #303030;
+
+      path {
+        fill: none !important;
+        stroke-width: 2px;
+        stroke: ${theme.darkShades} !important;
+        stroke-linecap: butt;
+        stroke-linejoin: miter;
+      }
+    }
   }
 `
 
@@ -98,26 +178,83 @@ const MobileMenu: any = styled(animated.div)`
   && {
     position: fixed;
     left: 0;
-    top: 161px;
+    top: 0px;
     height: 100%;
-    width: 100%;
-    background-color: #2f2f2f;
+    width: 300px;
+    transform: translateX(-100%);
+    background-color: #fff;
     z-index: 2;
-    padding: 2rem;
     overflow: hidden;
-    a {
-      color: #fff;
-    }
-    .social {
-      margin-left: 1.2rem;
-      margin-top: 2rem;
-      > section {
-        width: 240px;
-        .level-item {
-          float: left;
+    border-right: 1px solid #eee;
+    background: #fff;
+
+    .menu-header {
+      border-bottom: 1px solid #eee;
+      height: 70px;
+      margin: 0 15px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      .icon {
+        height: 30px;
+        width: 30px;
+        fill: #303030;
+
+        path {
+          fill: none !important;
+          stroke-width: 2px;
+          stroke: ${theme.darkShades} !important;
+          stroke-linecap: butt;
+          stroke-linejoin: miter;
         }
       }
     }
+
+    .menu {
+      padding: 0 15px;
+    }
+
+    .social {
+      margin-top: 20px;
+    }
+    a:hover {
+      background: transparent;
+      color: ${theme.primaryColor};
+    }
+  }
+`
+const AccordionStyled = styled(Accordion)`
+  .accordion__item:not(:last-child) {
+    border-bottom: 1px solid #eee;
+  }
+  .accordion__title {
+    padding: 1rem 0;
+    cursor: pointer;
+    :focus {
+      outline: none;
+    }
+    h3,
+    a {
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+  }
+  .accordion__body {
+    display: block;
+  }
+  .accordion__body--hidden {
+    display: none;
   }
 `
 
@@ -177,14 +314,12 @@ const Cart = styled.div`
 const AnnouncementContainer = styled.div`
   background-color: ${theme.mainBrandColor};
   // background-color: ${theme.lightShades};
-  // background: #333;
   z-index: 99;
   width: 100%;
   height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
-  // transform: translateY(100%);
 
   .item {
     // color: ${theme.darkAccent} !important;
@@ -196,13 +331,17 @@ const AnnouncementContainer = styled.div`
   }
 `
 
-const CartMobile = styled.div`
-  width: 8rem;
-  float: right;
-  margin-top: 6rem;
-  margin-right: 0.3rem;
-  .count {
-    left: 16px;
+const MobileUnderlay: any = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #eeeeeeaa;
+  transition: opacity 0.25s ease;
+
+  @media (min-width: 768px) {
+    display: none;
   }
 `
 
@@ -254,23 +393,30 @@ const Header: React.FC<any> = ({ home }) => {
   `)
   const refs = useRef<HTMLDivElement>()
 
-  const setBarToFixed = useCallback(() => {
-    const DOMNode = refs.current
-    if (DOMNode) {
-      const offset = DOMNode.getBoundingClientRect().top
+  const setBarToFixed = useCallback(
+    () => {
+      const DOMNode = refs.current
+      if (DOMNode) {
+        const container = DOMNode.querySelector(
+          "#main-head-con.is-hidden-mobile"
+        ) as HTMLDivElement
 
-      if (offset <= -50) {
-        DOMNode.style.position = "sticky"
-        DOMNode.style.width = "100%"
-        DOMNode.style.top = "-50px"
-        DOMNode.style.left = "0"
-      } else {
-        DOMNode.style.position = "relative"
-        DOMNode.style.top = "auto"
-        DOMNode.style.left = "auto"
+        if (window.scrollY > 50) {
+          DOMNode.style.position = "sticky"
+          DOMNode.style.width = "100%"
+          DOMNode.style.top = "0px"
+          DOMNode.style.left = "0"
+          container.style.transform = "translateY(-50px)"
+        } else {
+          DOMNode.style.position = "relative"
+          DOMNode.style.top = "auto"
+          DOMNode.style.left = "auto"
+          container.style.transform = "translateY(0px)"
+        }
       }
-    }
-  }, [refs])
+    },
+    [refs]
+  )
 
   useEffect(() => {
     window.addEventListener("scroll", setBarToFixed, { passive: true })
@@ -280,8 +426,7 @@ const Header: React.FC<any> = ({ home }) => {
   }, [setBarToFixed])
 
   const [mobileMenuActive, setMobileMenuActive] = useState(false)
-  // const { data } = useQuery(cartQuery)
-  // const cartItems = data ? data.cartItems || [] : []
+
   const { allSanityCategory } = data
 
   const cart = (
@@ -314,25 +459,18 @@ const Header: React.FC<any> = ({ home }) => {
           </g>
         </svg>
         {2 > 0 && <div className="count">2</div>}
-        {/* {cartItems.length > 0 && (
-          <div className="count">{cartItems.length}</div>
-        )} */}
       </Link>
     </Cart>
   )
 
   const toggleMobileMenu = () => {
-    // if (mobileMenuActive) {
-    //   $('html').removeClass('disable-scroll');
-    // } else {
-    //   $('html').addClass('disable-scroll');
-    // }
     setMobileMenuActive(!mobileMenuActive)
   }
 
   return (
     <div className="container" style={{ zIndex: 11 }} ref={refs}>
       <Container
+        id="main-head-con"
         className="is-hidden-mobile"
         mainBrandColor={theme.mainBrandColor}
       >
@@ -397,52 +535,140 @@ const Header: React.FC<any> = ({ home }) => {
           </nav>
         </header>
       </Container>
+
+      {/* Mobile */}
       <ContainerMobile className="is-hidden-tablet">
-        <div className="columns is-mobile">
-          <div className="column">
-            <Link to="/">
-              <img src={config.logo} alt={`${config.siteName} logo`} />
-            </Link>
-          </div>
-          <div className="column">
-            {mobileMenuActive ? (
-              <span>
-                <a onClick={toggleMobileMenu}>
-                  <i className="fas fa-times menu-trigger" />
-                </a>
-              </span>
-            ) : (
-              <a onClick={toggleMobileMenu}>
-                <i className="fas fa-bars menu-trigger" />
-              </a>
-            )}
-            <CartMobile>{cart}</CartMobile>
-          </div>
-        </div>
+        <header>
+          <nav
+            className="my-navbar"
+            role="navigation"
+            aria-label="main navigation"
+          >
+            <div className="menu-trigger">
+              <button onClick={toggleMobileMenu}>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  role="presentation"
+                  className="icon icon-hamburger"
+                  viewBox="0 0 64 64"
+                >
+                  <path d="M7 15h51M7 32h43M7 49h51"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="logo-link">
+              <Link to="/">
+                <img
+                  src={config.logo}
+                  className="logo"
+                  alt={`${config.siteName} logo`}
+                />
+              </Link>
+            </div>
+            <Cart>
+              <Link to="/cart">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  role="presentation"
+                  className="icon icon-bag"
+                  viewBox="0 0 64 64"
+                >
+                  <g fill="none" stroke="#000" strokeWidth="2">
+                    <path d="M25 26c0-15.79 3.57-20 8-20s8 4.21 8 20"></path>
+                    <path d="M14.74 18h36.51l3.59 36.73h-43.7z"></path>
+                  </g>
+                </svg>
+                {2 > 0 && <div className="count">2</div>}
+                {/* {cartItems.length > 0 && (
+          <div className="count">{cartItems.length}</div>
+        )} */}
+              </Link>
+            </Cart>
+          </nav>
+        </header>
+
         <Spring
           native
-          from={{ height: 0, opacity: 0, paddingTop: "-64px" }}
+          from={{
+            transform: "translateX(-100%)",
+            opacity: 0,
+          }}
           to={{
-            height: mobileMenuActive ? 800 : 0,
+            transform: mobileMenuActive
+              ? "translateX(0%)"
+              : "translateX(-100%)",
             opacity: mobileMenuActive ? 1 : 0,
-            paddingTop: mobileMenuActive ? 0 : -64,
+            visibility: mobileMenuActive ? "visible" : "hidden",
           }}
         >
           {(styles) => (
-            <MobileMenu style={styles}>
-              <aside className="menu">
-                <ul className="menu-list is-uppercase has-text-weight-bold is-size-4">
-                  {NavItems.map((item) => (
-                    <li key={item.id} onClick={toggleMobileMenu}>
-                      <Link to={item.url}>{item.name}</Link>
-                    </li>
-                  ))}
-                  <li className="social">
-                    <SocialIcons data={home} inverted />
-                  </li>
-                </ul>
-              </aside>
-            </MobileMenu>
+            <>
+              <MobileUnderlay
+                style={{
+                  visibility: mobileMenuActive ? "visible" : "hidden",
+                  opacity: mobileMenuActive ? 1 : 0,
+                }}
+              />
+              <MobileMenu style={styles}>
+                <div className="menu-header">
+                  <button onClick={toggleMobileMenu}>
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      role="presentation"
+                      className="icon icon-close"
+                      viewBox="0 0 64 64"
+                    >
+                      <path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"></path>
+                    </svg>{" "}
+                  </button>
+                </div>
+                <aside className="menu">
+                  <ul>
+                    <AccordionStyled accordion={false} className="menu-list">
+                      {NavItems.map((item) => (
+                        <AccordionItem key={item.id}>
+                          <AccordionItemTitle>
+                            {item.name.toLowerCase() === "collections" ? (
+                              <h3>{item.name}</h3>
+                            ) : (
+                              <Link to={item.url} activeClassName="active">
+                                {item.name}
+                              </Link>
+                            )}
+                          </AccordionItemTitle>
+                          {item.name.toLowerCase() === "collections" && (
+                            <AccordionItemBody>
+                              {allSanityCategory.edges.map(({ node }) => (
+                                <Link
+                                  key={node._id}
+                                  to={node.slug.current}
+                                  className="my-navbar-text is-uppercase"
+                                  activeClassName="active"
+                                >
+                                  {node.title}
+                                </Link>
+                              ))}
+                            </AccordionItemBody>
+                          )}
+                        </AccordionItem>
+                      ))}
+                    </AccordionStyled>
+
+                    {/* {NavItems.map((item) => (
+                      <li key={item.id} onClick={toggleMobileMenu}>
+                        <Link to={item.url}>{item.name}</Link>
+                      </li>
+                    ))} */}
+                    <div className="social">
+                      <SocialIcons data={home} inverted />
+                    </div>
+                  </ul>
+                </aside>
+              </MobileMenu>
+            </>
           )}
         </Spring>
       </ContainerMobile>

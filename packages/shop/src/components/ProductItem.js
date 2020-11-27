@@ -4,8 +4,6 @@ import styled from "styled-components"
 import { animated } from "react-spring"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-
-import config from "../utils/config"
 import { formatCurrency } from "../utils/helpers"
 
 const Container = styled(animated.div)`
@@ -100,7 +98,9 @@ const ProductItem = ({ item, styles }) => (
               <Link to={`/product/${item.slug.current}`}>{item.title}</Link>
             </p>
             {item.otherVariants[0] && (
-              <p className="price">N{item.otherVariants[0].pricing[0].price}</p>
+              <p className="price">
+                {formatCurrency(item.otherVariants[0].pricing[0].price)}
+              </p>
             )}
           </div>
         </div>

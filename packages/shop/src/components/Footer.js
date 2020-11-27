@@ -14,13 +14,12 @@ const Container = styled.footer`
   padding-bottom: 5.5rem;
   margin-top: 5rem;
   border-top: 1px solid #eee;
-  ${"" /* background: #333; */}
-  * {
-    ${"" /* color: #fff !important; */}
-  }
+
   .top-head {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    grid-row-gap: 4rem;
 
     h5 {
       font-weight: 700;
@@ -39,6 +38,14 @@ const Container = styled.footer`
       &:hover {
         color: ${config.primaryColor} !important;
       }
+    }
+
+    @media (max-width: 991px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
     }
   }
 `
