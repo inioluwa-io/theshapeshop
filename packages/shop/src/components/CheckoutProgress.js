@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import config from "../utils/config"
 
 const Progress = styled.div`
   border-top: 1px solid #979797;
-  margin: 3rem 2rem;
+  margin: 3rem 0rem;
   .active {
     font-weight: bold;
     .dot {
-      background-color: #000 !important;
+      background-color: ${config.primaryColor} !important;
     }
   }
   .step {
@@ -37,31 +38,31 @@ const Progress = styled.div`
       margin: -9px 0 0 97%;
     }
   }
-`;
+`
 
 const CheckoutProgress = ({ activeStep }) => (
   <Progress>
-    <div className={`step one ${activeStep === 2 ? 'active' : ''}`}>
+    <div className={`step one ${activeStep === 2 ? "active" : ""}`}>
+      <div className="dot" />
+      Cart
+    </div>
+    <div className={`step two ${activeStep === 3 ? "active" : ""}`}>
       <div className="dot" />
       Shipping
     </div>
-    <div className={`step two ${activeStep === 3 ? 'active' : ''}`}>
+    <div className={`step three ${activeStep === 4 ? "active" : ""}`}>
       <div className="dot" />
       Payment
     </div>
-    <div className={`step three ${activeStep === 4 ? 'active' : ''}`}>
-      <div className="dot" />
-      Confirm
-    </div>
   </Progress>
-);
+)
 
 CheckoutProgress.defaultProps = {
   activeStep: 1,
-};
+}
 
 CheckoutProgress.propTypes = {
   activeStep: PropTypes.number,
-};
+}
 
-export default CheckoutProgress;
+export default CheckoutProgress

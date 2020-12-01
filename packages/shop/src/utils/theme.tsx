@@ -54,7 +54,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: ${theme.secondaryFontFamily};
     color: ${theme.textColor};
-    // letter-spacing: 0.03rem !important;
     font-size: 16px;
     line-height:normal;
     letter-spacing: normal;
@@ -70,9 +69,12 @@ const GlobalStyle = createGlobalStyle`
     line-height:normal;
     letter-spacing: normal;
     font-family: Karla, Arial !important;
-    // scroll-behavior: smooth;
   }
-  p {
+  button{
+    cursor:pointer;
+  }
+  .olark-launch-button{
+    z-index:9 !important;
   }
   p, .title, .box {
     color: ${theme.textColor} ;

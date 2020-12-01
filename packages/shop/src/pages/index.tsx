@@ -105,7 +105,7 @@ const HomePage = ({ data }) => {
   return (
     <Layout>
       <Seo
-        title="The Shape Shop"
+        title="Home"
         description={home?.description || ""}
         url={config.siteUrl || ""}
       />

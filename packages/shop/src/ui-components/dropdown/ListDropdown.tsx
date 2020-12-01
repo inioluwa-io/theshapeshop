@@ -70,7 +70,7 @@ const ListDropdown: React.FC<ListDropdownCopmonent> = ({
       <MegaMenu className="mega-menu">
         <div className="inner-container">
           {list.map((item, idx: number) => (
-            <Link to={item?.url || "/"} className="each-menu" key={idx}>
+            <Link to={"/" + item?.slug || "/"} className="each-menu" key={idx}>
               <span>{item.title}</span>
             </Link>
           ))}

@@ -13,6 +13,7 @@ import gql from "graphql-tag"
 import config from "../utils/config"
 import SocialIcons from "./SocialIcons"
 import { theme } from "../utils/theme"
+import CartPanel from "./Cart"
 import { graphql, useStaticQuery } from "gatsby"
 import { Dropdown, ListDropdown } from "../ui-components"
 
@@ -177,6 +178,10 @@ const ContainerMobile = styled.div`
       }
     }
   }
+  .cart-toggle {
+    position: relative;
+    display: flex;
+  }
 `
 
 const MobileMenu: any = styled(animated.div)`
@@ -275,6 +280,7 @@ const Cart = styled.div`
     color: #4a4a4a !important;
     display: flex;
     position: relative;
+    cursor: pointer;
   }
   .icon {
     width: 28px;
@@ -357,12 +363,6 @@ const NavItems = [
   { id: 5, name: "Contact", url: "/contact" },
 ]
 
-const collectionItems = [
-  { img: "/images/wear3.jpg", title: "Full body shapers" },
-  { img: "/images/wear1.jpg", title: "Buttlifters" },
-  { img: "/images/wear5.jpg", title: "Waist trainers" },
-]
-
 const Announcement: React.FC<{ slide: string[] }> = ({ slide }) => (
   <AnnouncementContainer>
     {slide.map((item, idx: number) => (
@@ -423,13 +423,41 @@ const Header: React.FC<any> = ({ home }) => {
     }
   }, [setBarToFixed])
 
+  // set overflow on links click
+  useEffect(() => {
+    const DOMNode = refs.current
+    if (DOMNode) {
+      const links = DOMNode.querySelectorAll("a")
+      const html: HTMLElement = document.querySelector("html")
+
+      links.forEach((link) => {
+        link.addEventListener("click", () => {
+          html.style.overflow = "visible"
+        })
+      })
+      return () => {
+        links.forEach((link) => {
+          link.removeEventListener("click", () => {
+            html.style.overflow = "visible"
+          })
+        })
+      }
+    }
+  }, [refs])
+
   const [mobileMenuActive, setMobileMenuActive] = useState(false)
+  const [cartIsOpen, setCartIsOpen] = useState(false)
 
   const { allSanityCategory } = data
 
   const cart = (
     <Cart>
-      <ListDropdown list={[{ title: "Sign in" }, { title: "Register" }]}>
+      <ListDropdown
+        list={[
+          { title: "Sign in", slug: "signin" },
+          { title: "Register", slug: "register" },
+        ]}
+      >
         <div className="link">
           <svg
             aria-hidden="true"
@@ -443,7 +471,15 @@ const Header: React.FC<any> = ({ home }) => {
           <span className="fallback-text ">Log in</span>
         </div>
       </ListDropdown>
-      <Link to="/cart">
+      <button
+        className="link"
+        onClick={() => {
+          setCartIsOpen(true)
+
+          const html: HTMLElement = document.querySelector("html")
+          html.style.overflow = "hidden"
+        }}
+      >
         <svg
           aria-hidden="true"
           focusable="false"
@@ -457,12 +493,17 @@ const Header: React.FC<any> = ({ home }) => {
           </g>
         </svg>
         {2 > 0 && <div className="count">2</div>}
-      </Link>
+      </button>
     </Cart>
   )
 
   const toggleMobileMenu = () => {
+    const html: HTMLElement = document.querySelector("html")
+
     setMobileMenuActive(!mobileMenuActive)
+    mobileMenuActive
+      ? (html.style.overflow = "visible")
+      : (html.style.overflow = "hidden")
   }
 
   return (
@@ -565,7 +606,12 @@ const Header: React.FC<any> = ({ home }) => {
               </Link>
             </div>
             <Cart>
-              <Link to="/cart">
+              <button
+                className="cart-toggle"
+                onClick={() => {
+                  setCartIsOpen(true)
+                }}
+              >
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -582,7 +628,7 @@ const Header: React.FC<any> = ({ home }) => {
                 {/* {cartItems.length > 0 && (
           <div className="count">{cartItems.length}</div>
         )} */}
-              </Link>
+              </button>
             </Cart>
           </nav>
         </header>
@@ -619,7 +665,7 @@ const Header: React.FC<any> = ({ home }) => {
                       viewBox="0 0 64 64"
                     >
                       <path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"></path>
-                    </svg>{" "}
+                    </svg>
                   </button>
                 </div>
                 <aside className="menu">
@@ -659,6 +705,15 @@ const Header: React.FC<any> = ({ home }) => {
                         <Link to={item.url}>{item.name}</Link>
                       </li>
                     ))} */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Link to="/signin">Sign in</Link>
+                      <Link to="/register">Register</Link>
+                    </div>
                     <div className="social">
                       <SocialIcons data={home} inverted />
                     </div>
@@ -669,6 +724,14 @@ const Header: React.FC<any> = ({ home }) => {
           )}
         </Spring>
       </ContainerMobile>
+      <CartPanel
+        isOpen={cartIsOpen}
+        onClose={() => {
+          const html: HTMLElement = document.querySelector("html")
+          html.style.overflow = "visible"
+          setCartIsOpen(false)
+        }}
+      />
     </div>
   )
 }
